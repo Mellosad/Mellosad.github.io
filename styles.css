@@ -257,7 +257,7 @@ body {
 /* 언어 선택기 스타일 */
 .language-selector {
     position: fixed;
-    top: 20px;
+    top: 760px;
     right: 80px;
     z-index: 1000;
 }
