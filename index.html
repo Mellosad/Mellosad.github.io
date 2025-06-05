@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>박진우 - Cloud Engineer</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="AWS 클라우드 서비스를 활용한 웹 애플리케이션 배포 경험을 가진 신입 개발자 박진우의 포트폴리오">
+    <meta name="keywords" content="박진우, 클라우드 엔지니어, AWS, 웹 개발, 포트폴리오">
+    <meta name="author" content="박진우">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="박진우 - Cloud Engineer">
+    <meta property="og:description" content="AWS 클라우드 서비스를 활용한 웹 애플리케이션 배포 경험">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://parkjinwoo.tk">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- 로딩 스피너 -->
+    <div id="loading-spinner" class="loading-spinner">
+        <div class="spinner-container">
+            <div class="spinner"></div>
+            <div class="loading-text" data-translate="loadingText">포트폴리오 로딩 중<span class="loading-dots"><span>.</span><span>.</span><span>.</span></span></div>
+        </div>
+    </div>
+
+    <!-- 스크롤 진행률 -->
+    <div class="scroll-progress"></div>
+
+    <!-- 테마 토글 버튼 -->
+    <div class="theme-toggle">
+        <button id="theme-btn" class="theme-btn">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+
+    <!-- 언어 선택기 -->
+    <div class="language-selector">
+        <div class="language-dropdown">
+            <button id="language-btn" class="language-btn">
+                <span class="flag">🇰🇷</span>
+                <span id="current-lang">한국어</span>
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div id="language-menu" class="language-menu">
+                <button class="lang-btn active" data-lang="ko" onclick="changeLanguage('ko')">
+                    <span class="flag">🇰🇷</span>
+                    <span>한국어</span>
+                </button>
+                <button class="lang-btn" data-lang="en" onclick="changeLanguage('en')">
+                    <span class="flag">🇺🇸</span>
+                    <span>English</span>
+                </button>
+                <button class="lang-btn" data-lang="ja" onclick="changeLanguage('ja')">
+                    <span class="flag">🇯🇵</span>
+                    <span>日本語</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 메인 컨테이너 -->
+    <div id="main-container" class="container">
+        <!-- 네비게이션 -->
+        <nav id="navbar" class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">Mello</div>
+                <ul id="nav-menu" class="nav-menu">
+                    <li><a href="#about" data-translate="navAbout">About</a></li>
+                    <li><a href="#skills" data-translate="navSkills">Skills</a></li>
+                    <li><a href="#experience" data-translate="navExperience">Experience</a></li>
+                    <li><a href="#projects" data-translate="navProjects">Projects</a></li>
+                    <li><a href="#downloads" data-translate="navDownloads">Downloads</a></li>
+                    <li><a href="#contact" data-translate="navContact">Contact</a></li>
+                </ul>
+                <div class="nav-toggle" onclick="toggleMobileMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 파티클 캔버스 -->
+        <canvas id="particles-canvas"></canvas>
+
+        <!-- 히어로 섹션 -->
+        <section class="hero">
+            <div class="hero-background">
+                <div class="hero-particles"></div>
+            </div>
+            <div class="hero-content">
+                <div class="profile-section">
+                    <div class="profile-image">
+                        <img id="profile-img" src="https://ys-portpolio.s3.ap-northeast-2.amazonaws.com/images/profile-image.JPG" alt="박진우">
+                        <div class="profile-ring"></div>
+                    </div>
+                    <div class="profile-status">
+                        <div class="status-indicator"></div>
+                        <span data-translate="profileStatus">현재 구직중</span>
+                    </div>
+                </div>
+                <div class="hero-text">
+                    <h1 class="hero-title" data-translate="heroTitle">
+                        <span class="title-highlight">박진우</span>
+                    </h1>
+                    <h2 class="hero-subtitle" data-translate="heroSubtitle">Cloud Engineer</h2>
+                    <p class="hero-description" data-translate="heroDescription">
+                        AWS 클라우드 서비스를 활용한 웹 애플리케이션<br>의 성공적인 수동 배포 경험
+                    </p>
+                    <div class="hero-buttons">
+                        <button id="hero-about-btn" class="btn btn-primary" onclick="scrollToSection('about')">
+                            <i class="fas fa-user"></i>
+                            <span data-translate="heroAboutBtn">About Me</span>
+                        </button>
+                        <button id="hero-projects-btn" class="btn btn-outline" onclick="scrollToSection('projects')">
+                            <i class="fas fa-code"></i>
+                            <span data-translate="heroProjectsBtn">Projects</span>
+                        </button>
+                        <button id="hero-resume-btn" class="btn btn-secondary" onclick="downloadResume()">
+                            <i class="fas fa-download"></i>
+                            <span data-translate="downloadResume">Resume</span>
+                        </button>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://github.com/mellosad" target="_blank" class="social-link">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="linkedin.com/in/jinwoo-park-854344358/" target="_blank" class="social-link">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="mailto:wlsdntm10@gmail.com" class="social-link">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <div class="scroll-arrow">↓</div>
+                <span data-translate="scrollDown">Scroll Down</span>
+            </div>
+        </section>
+
+        <!-- About 섹션 -->
+        <section id="about" class="section">
+            <div class="about-content">
+                <div class="section-header">
+                    <h2 class="section-title" data-translate="aboutTitle">About Me</h2>
+                    <p class="section-subtitle" data-translate="aboutSubtitle">저에 대해 소개합니다</p>
+                </div>
+                
+                <div class="about-text">
+                    <p class="about-description" data-translate="aboutDescription">
+                        안녕하세요! 클라우드 엔지니어를 꿈꾸는 신입 개발자 박진우입니다. AWS 클라우드 서비스를 활용하여 웹 애플리케이션을 배포하고 관리하는 경험을 쌓고 있으며, 서버리스 아키텍처와 DevOps에 깊은 관심을 가지고 있습니다.
+                    </p>
+                </div>
+                
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="1">1</span>
+                        <span class="stat-label" data-translate="yearsExpLabel">Years Experience</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="2">2</span>
+                        <span class="stat-label" data-translate="projectsCompletedLabel">Projects Completed</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="8">8</span>
+                        <span class="stat-label" data-translate="technologiesLabel">Technologies</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills 섹션 -->
+        <section id="skills" class="section section-dark">
+            <div class="section-header">
+                <h2 class="section-title" data-translate="skillsTitle">Certifications & Skills</h2>
+                <p class="section-subtitle" data-translate="skillsSubtitle">보유하고 있는 자격증과 기술 스택입니다</p>
+            </div>
+            
+            <div class="skills-container">
+                <!-- Cloud & DevOps 스킬 -->
+                <div class="skill-category">
+                    <div class="category-header">
+                        <i class="fas fa-cloud"></i>
+                        <h3 data-translate="cloudDevopsTitle">Cloud & DevOps</h3>
+                    </div>
+                    <div class="skills-grid">
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">AWS</span>
+                                <span class="skill-percentage">45%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="45%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">JavaScript</span>
+                                <span class="skill-percentage">50%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="50%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">HTML/CSS</span>
+                                <span class="skill-percentage">50%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="50%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">JSP/Servlet</span>
+                                <span class="skill-percentage">40%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="40%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 자격증 섹션 -->
+                <div class="certifications-section">
+                    <div class="category-header">
+                        <i class="fas fa-certificate"></i>
+                        <h3 data-translate="certificationsTitle">Certifications</h3>
+                    </div>
+                    <div id="certifications-grid" class="certifications-grid">
+                        <div class="certification-item">
+                            <div class="cert-icon">
+                                <i class="fas fa-language"></i>
+                            </div>
+                            <div class="cert-content">
+                                <h4 data-translate="cert1Name">JPT 655점</h4>
+                                <p data-translate="cert1Issuer">일본어능력시험</p>
+                                <span class="cert-date" data-translate="cert1Date">2023.08</span>
+                            </div>
+                        </div>
+                        <div class="certification-item">
+                            <div class="cert-icon">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <div class="cert-content">
+                                <h4 data-translate="cert2Name">TOEIC SPEAKING IM</h4>
+                                <p data-translate="cert2Issuer">ETS</p>
+                                <span class="cert-date" data-translate="cert2Date">2023.10</span>
+                            </div>
+                        </div>
+                        <div class="certification-item">
+                            <div class="cert-icon">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <div class="cert-content">
+                                <h4 data-translate="cert3Name">SQLD</h4>
+                                <p data-translate="cert3Issuer">한국데이터산업진흥원</p>
+                                <span class="cert-date" data-translate="cert3Date">2023.09</span>
+                            </div>
+                        </div>
+                        <div class="certification-item">
+                            <div class="cert-icon">
+                                <i class="fas fa-language"></i>
+                            </div>
+                            <div class="cert-content">
+                                <h4 data-translate="cert4Name">TOEIC 850</h4>
+                                <p data-translate="cert4Issuer">ETS</p>
+                                <span class="cert-date" data-translate="cert4Date">2023.12</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience 섹션 -->
+        <section id="experience" class="section">
+            <div class="experience-container">
+                <div class="section-header">
+                    <h2 class="section-title" data-translate="expTitle">Work Experience</h2>
+                    <p class="section-subtitle" data-translate="expSubtitle">주요 경력 사항</p>
+                </div>
+                
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <h3 data-translate="exp1Title">비영리 단체 CHACKUS</h3>
+                        <div>
+                            <span class="experience-company" data-translate="exp1Company">AWS 운영 및 관리</span>
+                            <span class="experience-period">2025.04 - 현재</span>
+                        </div>
+                    </div>
+                    <div class="experience-description">
+                        <p data-translate="exp1Desc">
+                            AWS, GCP 클라우드 서비스 관리 및 운영을 담당하고 있으며 
+                            현재 웹 애플리케이션 제작 및 관리를 담당하고 있습니다.
+                        </p>
+                        <ul>
+                            <li data-translate="exp1Item1">(초기)JSP/Servlet 기반 웹 애플리케이션 개발 및 배포</li>
+                            <li data-translate="exp1Item2">AWS EC2 인스턴스 설정 및 배포</li>
+                            <li data-translate="exp1Item3">서버리스 아키텍처 설계 및 구현</li>
+                            <li data-translate="exp1Item4">체커스에 관하여 "Chackus.com"</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects 섹션 -->
+        <section id="projects" class="section section-dark">
+            <div class="section-header">
+                <h2 class="section-title" data-translate="projectsTitle">Featured Projects</h2>
+                <p class="section-subtitle" data-translate="projectsSubtitle">주요 프로젝트를 소개합니다</p>
+            </div>
+            
+            <div class="projects-filter">
+                <button class="filter-btn active" data-filter="all" data-translate="filterAll">All</button>
+                <button class="filter-btn" data-filter="web" data-translate="filterWeb">Web App</button>
+                <button class="filter-btn" data-filter="cloud" data-translate="filterCloud">Cloud</button>
+            </div>
+            
+            <div id="projects-grid" class="projects-grid">
+                <!-- 프로젝트 1 -->
+                <div class="project-card" data-category="web" data-project-id="project1" onclick="openProjectModal('project1')">
+                    <div class="project-image">
+                        <img src="https://ys-portpolio.s3.ap-northeast-2.amazonaws.com/images/project1-image.jpg" alt="체커스 웹페이지">
+                        <div class="project-overlay">
+                            <div class="project-actions">
+                                <button class="action-btn" title="자세히 보기">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 data-translate="project1Title">체커스 웹페이지 제작 배포</h3>
+                            <span class="project-status">운영중</span>
+                        </div>
+                        <p data-translate="project1Desc">
+                            JSP, Servlet, CSS, JavaScript를 사용하여 비영리 단체 웹페이지를 제작하고 AWS EC2 단일 인스턴스로 배포 중이며, 서버리스 아키텍처로 이전 계획 중입니다.
+                        </p>
+                        <div class="project-tags">
+                            <span class="tag" data-translate="project1Tag1">JSP</span>
+                            <span class="tag" data-translate="project1Tag2">Servlet</span>
+                            <span class="tag" data-translate="project1Tag3">AWS EC2</span>
+                            <span class="tag" data-translate="project1Tag4">CSS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 프로젝트 2 -->
+                <div class="project-card" data-category="cloud" data-project-id="project2" onclick="openProjectModal('project2')">
+                    <div class="project-image">
+                        <img src="https://ys-portpolio.s3.ap-northeast-2.amazonaws.com/images/project2-image.jpg" alt="포트폴리오 웹사이트">
+                        <div class="project-overlay">
+                            <div class="project-actions">
+                                <button class="action-btn" title="자세히 보기">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 data-translate="project2Title">포트폴리오 페이지 제작 배포</h3>
+                            <span class="project-status">완료</span>
+                        </div>
+                        <p data-translate="project2Desc">
+                            서버리스 아키텍처를 활용한 개인 포트폴리오 웹사이트로 AWS Lambda, S3, DynamoDB, API Gateway를 사용하여 구축하였습니다.
+                        </p>
+                        <div class="project-tags">
+                            <span class="tag" data-translate="project2Tag1">AWS Lambda</span>
+                            <span class="tag" data-translate="project2Tag2">S3</span>
+                            <span class="tag" data-translate="project2Tag3">DynamoDB</span>
+                            <span class="tag" data-translate="project2Tag4">JavaScript</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Downloads 섹션 -->
+        <section id="downloads" class="section">
+            <div class="downloads-container">
+                <div class="section-header">
+                    <h2 class="section-title" data-translate="downloadsTitle">Downloads</h2>
+                    <p class="section-subtitle" data-translate="downloadsSubtitle">이력서와 자기소개서를 다운로드하세요</p>
+                </div>
+                
+                <div class="download-grid">
+                    <!-- 이력서 다운로드 -->
+                    <div class="download-card">
+                        <div class="download-icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <div class="download-content">
+                            <h3 data-translate="resumeTitle">이력서</h3>
+                            <p data-translate="resumeDesc">박진우의 상세한 이력서를 다운로드하세요</p>
+                            <button onclick="downloadResume()" class="btn btn-primary">
+                                <i class="fas fa-download"></i>
+                                <span data-translate="downloadBtn">다운로드</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 자기소개서 다운로드 -->
+                    <div class="download-card">
+                        <div class="download-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="download-content">
+                            <h3 data-translate="coverLetterTitle">자기소개서</h3>
+                            <p data-translate="coverLetterDesc">지원 동기와 포부가 담긴 자기소개서입니다</p>
+                            <button onclick="downloadCoverLetter()" class="btn btn-primary">
+                                <i class="fas fa-download"></i>
+                                <span data-translate="downloadBtn">다운로드</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact 섹션 -->
+        <section id="contact" class="section section-dark">
+            <div class="contact-container">
+                <div class="section-header">
+                    <h2 class="section-title" data-translate="contactTitle">Get In Touch</h2>
+                    <p class="section-subtitle" data-translate="contactSubtitle">언제든지 연락주세요</p>
+                </div>
+                
+                <div class="contact-content">
+                    <div class="contact-intro">
+                        <h3 data-translate="contactWorkTogether">Let's Work Together</h3>
+                        <p data-translate="contactIntro">새로운 프로젝트나 협업 기회에 대해 이야기해보세요.</p>
+                    </div>
+                    
+                    <div class="contact-methods">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>Email</h4>
+                                <span>wlsdntm10@gmail.com</span>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>Phone</h4>
+                                <span>+82 10-6528-6026</span>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>Location</h4>
+                                <span>안양시, 경기도, 대한민국</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>박진우</h3>
+                    <p>Cloud Engineer</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#about">About</a>
+                    <a href="#skills">Skills</a>
+                    <a href="#projects">Projects</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <div class="footer-social">
+                    <a href="https://github.com/mellosad" target="_blank">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/jinwoo-park-854344358/" target="_blank">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="mailto:wlsdnt10@gmail.com">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 박진우. <span data-translate="footerRights">All rights reserved.</span></p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- 프로젝트 모달 -->
+    <div id="project-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeProjectModal()">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
