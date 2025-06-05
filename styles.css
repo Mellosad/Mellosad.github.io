@@ -258,7 +258,7 @@ body {
 .language-selector {
     position: fixed;
     top: 760px;
-    right: 80px;
+    right: 20px;
     z-index: 1000;
 }
 
