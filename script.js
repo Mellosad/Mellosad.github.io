@@ -804,7 +804,7 @@ async function loadContentFromServer() {
     }
 }
 
-// 언어별 파일 다운로드 함수들
+// 이력서 다운로드 함수 수정
 function downloadResume() {
     const fileName = filePathMapping.resume[currentLanguage];
     const downloadName = fileNameMapping.resume[currentLanguage];
@@ -814,15 +814,34 @@ function downloadResume() {
         return;
     }
     
-    const link = document.createElement('a');
-    link.href = `${S3_BUCKET_URL}/files/${fileName}`;
-    link.download = downloadName;
-    link.click();
+    // fetch를 사용하여 파일을 blob으로 다운로드
+    fetch(`${S3_BUCKET_URL}/files/${fileName}`)
+        .then(response => response.blob())
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = downloadName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+        })
+        .catch(error => {
+            console.error('다운로드 오류:', error);
+            // 실패 시 기존 방식으로 폴백
+            const link = document.createElement('a');
+            link.href = `${S3_BUCKET_URL}/files/${fileName}`;
+            link.download = downloadName;
+            link.target = '_blank';
+            link.click();
+        });
     
     const message = getTranslation('notifResumeDownload') || '이력서 다운로드가 시작되었습니다.';
     showNotification(message);
 }
 
+// 자기소개서 다운로드 함수 수정
 function downloadCoverLetter() {
     const fileName = filePathMapping.coverLetter[currentLanguage];
     const downloadName = fileNameMapping.coverLetter[currentLanguage];
@@ -832,14 +851,33 @@ function downloadCoverLetter() {
         return;
     }
     
-    const link = document.createElement('a');
-    link.href = `${S3_BUCKET_URL}/files/${fileName}`;
-    link.download = downloadName;
-    link.click();
+    // fetch를 사용하여 파일을 blob으로 다운로드
+    fetch(`${S3_BUCKET_URL}/files/${fileName}`)
+        .then(response => response.blob())
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = downloadName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+        })
+        .catch(error => {
+            console.error('다운로드 오류:', error);
+            // 실패 시 기존 방식으로 폴백
+            const link = document.createElement('a');
+            link.href = `${S3_BUCKET_URL}/files/${fileName}`;
+            link.download = downloadName;
+            link.target = '_blank';
+            link.click();
+        });
     
     const message = getTranslation('notifCoverLetterDownload') || '자기소개서 다운로드가 시작되었습니다.';
     showNotification(message);
 }
+
 
 // 테마 관리
 function initializeTheme() {
